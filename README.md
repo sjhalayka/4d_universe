@@ -1,1 +1,1 @@
-# 4d_universe
+Requires qhull executables.
