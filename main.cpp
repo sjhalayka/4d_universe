@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {	
-	get_vertices_and_tetrahedra(10000);
+	get_vertices_and_tetrahedra(1000);
 
 	double K = 0;
 

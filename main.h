@@ -217,18 +217,20 @@ void get_all_tet_neighbours(void)
 {
 	tet_neighbours.clear();
 
-
 	vector<size_t> default_lookup;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 		tet_neighbours[i] = default_lookup;
 
-
+	cout << "Enumerating shared faces" << endl;
 
 	map<indexed_triangle, vector<size_t> > neighbours;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
+		if(i % 100 == 0)
+		cout << i + 1 << " of " << tetrahedra.size() << endl;
+
 		vector<indexed_triangle> tris;
 
 		get_sorted_tris_from_tetrahedron(i, tris);
@@ -237,9 +239,17 @@ void get_all_tet_neighbours(void)
 			neighbours[tris[j]].push_back(i);
 	}
 
+	cout << "Processing shared faces" << endl;
+
+	size_t count = 0;
 
 	for (map<indexed_triangle, vector<size_t> >::const_iterator ci = neighbours.begin(); ci != neighbours.end(); ci++)
 	{
+		if (count % 100 == 0)
+			cout << count + 1 << " of " << neighbours.size() << endl;
+
+		count++;
+
 		tet_neighbours[ci->second[0]].push_back(ci->second[1]);
 		tet_neighbours[ci->second[1]].push_back(ci->second[0]);
 	}
@@ -266,8 +276,10 @@ void get_vertices_and_tetrahedra(const size_t num_vertices)
 
 	ifstream rbox_file("vertices.txt");
 
+	string rbox_cmdline_short;
+
 	string line;
-	getline(rbox_file, line);
+	getline(rbox_file, rbox_cmdline_short);
 	getline(rbox_file, line);
 
 	for (size_t i = 0; i < num_vertices; i++)
@@ -284,10 +296,26 @@ void get_vertices_and_tetrahedra(const size_t num_vertices)
 
 		vertices.push_back(v);
 	}
+	
+	rbox_file.close();
 
-	string qconvex_cmdline = "rbox s ";
-	qconvex_cmdline += oss.str();
-	qconvex_cmdline += " D4 | qconvex i Qt > tetrahedra.txt";
+
+	ofstream rbox_file_out("vertices.txt");
+
+	rbox_file_out << rbox_cmdline_short << endl;
+	rbox_file_out << vertices.size() << endl;
+
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		// Process vertices...
+		//vertices[i] = vertices[i] * 2.0;
+
+		rbox_file_out << vertices[i].x << " " << vertices[i].y << " " << vertices[i].z << " " << vertices[i].w << endl;
+	}
+
+	rbox_file_out.close();
+
+	string qconvex_cmdline = "\"qconvex i Qt < vertices.txt\" > tetrahedra.txt";
 
 	system(qconvex_cmdline.c_str());
 
