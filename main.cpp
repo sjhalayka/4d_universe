@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {	
-	get_vertices_and_tetrahedra(100);
+	get_vertices_and_tetrahedra(10);
 	
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
@@ -15,7 +15,31 @@ int main(int argc, char **argv)
 
 		indexed_triangle it;
 
-		has_shared_triangle(i, tet_neighbours[i][0], it);
+		get_shared_triangle(i, tet_neighbours[i][0], it);
+
+
+
+		//cout << it.vertex_indices[0] << " ";
+		//cout << it.vertex_indices[1] << " ";
+		//cout << it.vertex_indices[2] << endl;
+
+		//has_shared_triangle(i, tet_neighbours[i][1], it);
+
+		//cout << it.vertex_indices[0] << " ";
+		//cout << it.vertex_indices[1] << " ";
+		//cout << it.vertex_indices[2] << endl;
+
+		//has_shared_triangle(i, tet_neighbours[i][2], it);
+
+		//cout << it.vertex_indices[0] << " ";
+		//cout << it.vertex_indices[1] << " ";
+		//cout << it.vertex_indices[2] << endl;
+		//
+		//has_shared_triangle(i, tet_neighbours[i][3], it);
+
+		//cout << it.vertex_indices[0] << " ";
+		//cout << it.vertex_indices[1] << " ";
+		//cout << it.vertex_indices[2] << endl;
 
 
 

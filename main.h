@@ -151,7 +151,7 @@ void get_sorted_tris_from_tetrahedron(size_t tet_index, vector<indexed_triangle>
 }
 
 
-bool has_shared_triangle(size_t tet_index_0, size_t tet_index_1, indexed_triangle &it)
+bool get_shared_triangle(size_t tet_index_0, size_t tet_index_1, indexed_triangle &it)
 {
 	it.vertex_indices[0] = 0;
 	it.vertex_indices[1] = 0;
@@ -190,6 +190,8 @@ void get_all_tet_neighbours(void)
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
+		cout << i + 1 << " of " << tetrahedra.size() << endl;
+
 		for (size_t j = 0; j < tetrahedra.size(); j++) 
 		{
 			if (i == j)
@@ -197,7 +199,7 @@ void get_all_tet_neighbours(void)
 
 			indexed_triangle it;
 
-			if (true == has_shared_triangle(i, j, it))
+			if (true == get_shared_triangle(i, j, it))
 				tet_neighbours[i].push_back(j);
 		}
 	}
