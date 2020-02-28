@@ -70,6 +70,40 @@ map<size_t, vector<size_t> > tet_neighbours;
 
 
 
+vector_4 get_tri_centre(const indexed_triangle& it)
+{
+	vector_4 ret;
+
+	vector_4 a = vertices[it.vertex_indices[0]];
+	vector_4 b = vertices[it.vertex_indices[1]];
+	vector_4 c = vertices[it.vertex_indices[2]];
+
+	ret = a + b + c;
+
+	ret = ret / 3.0;
+
+	return ret;
+}
+
+vector_4 get_tet_centre(const indexed_tetrahedron& it)
+{
+	vector_4 ret;
+
+	vector_4 a = vertices[it.vertex_indices[0]];
+	vector_4 b = vertices[it.vertex_indices[1]];
+	vector_4 c = vertices[it.vertex_indices[2]];
+	vector_4 d = vertices[it.vertex_indices[3]];
+
+	ret = a + b + c + d;
+
+	ret = ret / 4.0;
+
+	return ret;
+}
+
+
+
+
 void get_sorted_tris_from_tetrahedron(size_t tet_index, vector<indexed_triangle>& tris)
 {
 	tris.clear();
