@@ -217,28 +217,35 @@ void get_all_tet_neighbours(void)
 {
 	tet_neighbours.clear();
 
+
 	vector<size_t> default_lookup;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 		tet_neighbours[i] = default_lookup;
 
-	// Use brute force method
+
+
+	map<indexed_triangle, vector<size_t> > neighbours;
+
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
-		cout << i + 1 << " of " << tetrahedra.size() << endl;
+		vector<indexed_triangle> tris;
 
-		for (size_t j = 0; j < tetrahedra.size(); j++) 
-		{
-			if (i == j)
-				continue;
+		get_sorted_tris_from_tetrahedron(i, tris);
 
-			indexed_triangle it;
+		for (size_t j = 0; j < tris.size(); j++)
+			neighbours[tris[j]].push_back(i);
+	}
 
-			if (true == get_shared_triangle(i, j, it))
-				tet_neighbours[i].push_back(j);
-		}
+
+	for (map<indexed_triangle, vector<size_t> >::const_iterator ci = neighbours.begin(); ci != neighbours.end(); ci++)
+	{
+		tet_neighbours[ci->second[0]].push_back(ci->second[1]);
+		tet_neighbours[ci->second[1]].push_back(ci->second[0]);
 	}
 }
+
+
 
 
 void get_vertices_and_tetrahedra(const size_t num_vertices)

@@ -449,6 +449,27 @@ class custom_math::indexed_triangle
 public:
 	size_t vertex_indices[3];
 
+	inline bool operator<(const indexed_triangle& right) const
+	{
+		if (right.vertex_indices[0] > vertex_indices[0])
+			return true;
+		else if (right.vertex_indices[0] < vertex_indices[0])
+			return false;
+
+		if (right.vertex_indices[1] > vertex_indices[1])
+			return true;
+		else if (right.vertex_indices[1] < vertex_indices[1])
+			return false;
+
+		if (right.vertex_indices[2] > vertex_indices[2])
+			return true;
+		else if (right.vertex_indices[2] < vertex_indices[2])
+			return false;
+
+		return false;
+	}
+
+
 	inline bool operator==(const indexed_triangle& right) const
 	{
 		if (right.vertex_indices[0] == vertex_indices[0] &&
