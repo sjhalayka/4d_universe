@@ -28,6 +28,9 @@ namespace custom_math
 	class vector_3;
 	class vector_4;
 
+	class triangle;
+	class tetrahedron;
+
 	class indexed_triangle;
 	class indexed_tetrahedron;
 	class indexed_tetrahedron;
@@ -41,6 +44,8 @@ namespace custom_math
 	double d_3(const vector_3 &a, const vector_3 &b);
 	double d_4(const vector_4 &a, const vector_4 &b);
 };
+
+
 
 class custom_math::vector_3
 {
@@ -193,6 +198,18 @@ class custom_math::vector_4
 public:
 	double x, y, z, w;
 
+	inline bool operator==(const vector_4& right) const
+	{
+		if (right.x == x &&
+			right.y == y &&
+			right.z == z &&
+			right.w == w)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	vector_4(const double& src_x, const double& src_y, const double& src_z, const double& src_w)
 	{
@@ -217,32 +234,32 @@ public:
 		x = y = z = w = 0;
 	}
 
-	custom_math::vector_4 operator+(const vector_4& rhs)
+	vector_4 operator+(const vector_4& rhs)
 	{
 		return vector_4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
 	}
 
-	custom_math::vector_4 operator-(const vector_4& rhs)
+	vector_4 operator-(const vector_4& rhs)
 	{
 		return vector_4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 	}
 
-	custom_math::vector_4 operator*(const vector_4& rhs)
+	vector_4 operator*(const vector_4& rhs)
 	{
 		return vector_4(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
 	}
 
-	custom_math::vector_4 operator*(const double& rhs)
+	vector_4 operator*(const double& rhs)
 	{
 		return vector_4(x * rhs, y * rhs, z * rhs, w * rhs);
 	}
 
-	custom_math::vector_4 operator/(const double& rhs)
+	vector_4 operator/(const double& rhs)
 	{
 		return vector_4(x / rhs, y / rhs, z / rhs, w / rhs);
 	}
 
-	custom_math::vector_4& operator=(const vector_4& rhs)
+	vector_4& operator=(const vector_4& rhs)
 	{
 		x = rhs.x;
 		y = rhs.y;
@@ -251,25 +268,25 @@ public:
 		return *this;
 	}
 
-	custom_math::vector_4& operator+=(const vector_4& rhs)
+	vector_4& operator+=(const vector_4& rhs)
 	{
 		x += rhs.x; y += rhs.y; z += rhs.z; w += rhs.w;
 		return *this;
 	}
 
-	custom_math::vector_4& operator*=(const vector_4& rhs)
+	vector_4& operator*=(const vector_4& rhs)
 	{
 		x *= rhs.x; y *= rhs.y; z *= rhs.z; w *= rhs.w;
 		return *this;
 	}
 
-	custom_math::vector_4& operator*=(const double& rhs)
+	vector_4& operator*=(const double& rhs)
 	{
 		x *= rhs; y *= rhs; z *= rhs; w *= rhs;
 		return *this;
 	}
 
-	custom_math::vector_4 operator-(void)
+	vector_4 operator-(void)
 	{
 		vector_4 temp;
 		temp.x = -x;
@@ -285,7 +302,7 @@ public:
 		return sqrt(self_dot());
 	}
 
-	custom_math::vector_4& normalize(void)
+	vector_4& normalize(void)
 	{
 		double len = length();
 
@@ -388,6 +405,45 @@ public:
 	size_t index;
 };
 
+class custom_math::triangle
+{
+public:
+	vector_4 vertices[3];
+
+	inline bool operator==(const triangle& right) const
+	{
+		if (right.vertices[0] == vertices[0] &&
+			right.vertices[1] == vertices[1] &&
+			right.vertices[2] == vertices[2])
+		{
+			return true;
+		}
+
+		return false;
+	}
+};
+
+
+class custom_math::tetrahedron
+{
+public:
+	vector_4 vertices[4];
+
+	inline bool operator==(const tetrahedron& right) const
+	{
+		if (right.vertices[0] == vertices[0] &&
+			right.vertices[1] == vertices[1] &&
+			right.vertices[2] == vertices[2] &&
+			right.vertices[3] == vertices[3])
+		{
+			return true;
+		}
+
+		return false;
+	}
+};
+
+
 class custom_math::indexed_triangle
 {
 public:
@@ -411,7 +467,7 @@ class custom_math::indexed_tetrahedron
 public:
 	size_t vertex_indices[4];
 
-	inline bool operator==(const indexed_triangle& right) const
+	inline bool operator==(const indexed_tetrahedron &right) const
 	{
 		if (right.vertex_indices[0] == vertex_indices[0] &&
 			right.vertex_indices[1] == vertex_indices[1] &&

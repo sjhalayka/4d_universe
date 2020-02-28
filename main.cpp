@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 
 
 
+
 		//cout << it.vertex_indices[0] << " ";
 		//cout << it.vertex_indices[1] << " ";
 		//cout << it.vertex_indices[2] << endl;
