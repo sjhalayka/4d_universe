@@ -222,6 +222,7 @@ void get_all_tet_neighbours(void)
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 		tet_neighbours[i] = default_lookup;
 
+	// Use brute force method
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
 		cout << i + 1 << " of " << tetrahedra.size() << endl;
@@ -727,27 +728,28 @@ void draw_objects(bool disable_colouring)
 
 	glPushMatrix();
 
-	//glPointSize(5.0f);
+	glPointSize(5.0f);
 
-	//glBegin(GL_POINTS);
-	//glColor3f(1.0f, 0.5f, 0.0f);
+	glBegin(GL_POINTS);
+	glColor3f(1.0f, 0.5f, 0.0f);
 
-	//for (size_t i = 0; i < vertices.size(); i++)
-	//{
-	//	vector_3 v3;
-	//	vector_4 v4 = vertices[i];
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		vector_3 v3;
+		vector_4 v4 = vertices[i];
 
-	//	double x1 = vertices[i].x;// 2.0 * (v4.x * v4.y + v4.z * v4.w);
-	//	double x2 = vertices[i].y;//2.0 * (v4.x * v4.w + v4.y * v4.z);
-	//	double x3 = vertices[i].z;//(v4.x * v4.x + v4.z * v4.z) - (v4.y * v4.y + v4.w * v4.w);
+		double x1 = vertices[i].x;
+		double x2 = vertices[i].y;
+		double x3 = vertices[i].z;
 
-	//	glVertex3d(x1, x2, x3);
-
-	//	// << x1 << " " << x2 << " " << x3 << endl;
-	//}
+		glVertex3d(x1, x2, x3);
+	}
 
 
-	//glEnd();
+	glEnd();
+
+
+
 
 
 

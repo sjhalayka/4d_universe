@@ -3,13 +3,15 @@
 
 int main(int argc, char **argv)
 {	
-	get_vertices_and_tetrahedra(10);
-	
+	get_vertices_and_tetrahedra(100);
+
+	double K = 0;
+
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
 		if (tet_neighbours[i].size() != 4)
 		{
-			cout << "Error: " << tet_neighbours[i].size() << endl;
+			cout << "Error" << endl;
 			return 1;
 		}
 
@@ -39,7 +41,48 @@ int main(int argc, char **argv)
 		get_shared_triangle(i, tet_neighbours[i][3], it);
 		tri_3_centre = get_tri_centre(it);
 
+		vector_4 n_0, o_0;
+		vector_4 n_1, o_1;
+		vector_4 n_2, o_2;
+		vector_4 n_3, o_3;
+
+		n_0 = this_tet_centre - tri_0_centre;
+		n_0.normalize();
+
+		o_0 = tet_0_centre - tri_0_centre;
+		o_0.normalize();
+		o_0 = -o_0;
+
+		n_1 = this_tet_centre - tri_1_centre;
+		n_1.normalize();
+
+		o_1 = tet_1_centre - tri_1_centre;
+		o_1.normalize();
+		o_1 = -o_1;
+
+		n_2 = this_tet_centre - tri_2_centre;
+		n_2.normalize();
+
+		o_2 = tet_2_centre - tri_2_centre;
+		o_2.normalize();
+		o_2 = -o_2;
+
+		n_3 = this_tet_centre - tri_3_centre;
+		n_3.normalize();
+
+		o_3 = tet_3_centre - tri_3_centre;
+		o_3.normalize();
+		o_3 = -o_3;
+
+		double d_i = (n_0.dot(o_0) + n_1.dot(o_1) + n_2.dot(o_2) + n_3.dot(o_3)) / 4.0;
+		double k_i = (1.0 - d_i) / 2.0;
+
+		K += k_i;
 	}
+
+	K /= tetrahedra.size();
+
+	cout << 3.0 + K << endl;
 
 	glutInit(&argc, argv);
 	init_opengl(win_x, win_y);
