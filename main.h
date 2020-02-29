@@ -262,6 +262,9 @@ void attract_vertices(const size_t rounds)
 	{
 		for (size_t i = 0; i < vertices.size(); i++)
 		{
+			if(i % 100 == 0)
+			cout << "attraction round " << r + 1 << " of " << rounds << "  vertex " << i + 1 << " of " << vertices.size() << endl;
+
 			vector_4 acceleration;
 
 			for (size_t j = 0; j < vertices.size(); j++)
@@ -270,7 +273,7 @@ void attract_vertices(const size_t rounds)
 					continue;
 
 				double distance = (vertices[i] - vertices[j]).length();
-				acceleration += (vertices[i] - vertices[j])*(1.0/distance);
+				acceleration += (vertices[i] - vertices[j]) * (1.0 / distance);
 			}
 
 			vertices[i] = vertices[i] + acceleration;
@@ -279,7 +282,6 @@ void attract_vertices(const size_t rounds)
 		for (size_t i = 0; i < vertices.size(); i++)
 			vertices[i].normalize();
 	}
-
 }
 
 
@@ -332,13 +334,15 @@ void get_vertices_and_tetrahedra(const size_t num_vertices)
 
 
 	// Process vertices here
-	attract_vertices(100);
+	attract_vertices(0);
 
 	for (size_t i = 0; i < vertices.size(); i++)
 		rbox_file_out << vertices[i].x << " " << vertices[i].y << " " << vertices[i].z << " " << vertices[i].w << endl;
 
 	rbox_file_out.close();
 
+	
+	
 	string qconvex_cmdline = "\"qconvex i Qt < vertices.txt\" > tetrahedra.txt";
 
 	system(qconvex_cmdline.c_str());
