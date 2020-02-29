@@ -256,34 +256,6 @@ void get_all_tet_neighbours(void)
 }
 
 
-void attract_vertices(const size_t rounds)
-{
-	for (size_t r = 0; r < rounds; r++)
-	{
-		for (size_t i = 0; i < vertices.size(); i++)
-		{
-			if(i % 100 == 0)
-			cout << "attraction round " << r + 1 << " of " << rounds << "  vertex " << i + 1 << " of " << vertices.size() << endl;
-
-			vector_4 acceleration;
-
-			for (size_t j = 0; j < vertices.size(); j++)
-			{
-				if (i == j)
-					continue;
-
-				double distance = (vertices[i] - vertices[j]).length();
-				acceleration += (vertices[i] - vertices[j]) * (1.0 / distance);
-			}
-
-			vertices[i] = vertices[i] + acceleration;
-		}
-
-		for (size_t i = 0; i < vertices.size(); i++)
-			vertices[i].normalize();
-	}
-}
-
 
 void get_vertices_and_tetrahedra(const size_t num_vertices)
 {
@@ -334,7 +306,7 @@ void get_vertices_and_tetrahedra(const size_t num_vertices)
 
 
 	// Process vertices here
-	attract_vertices(0);
+
 
 	for (size_t i = 0; i < vertices.size(); i++)
 		rbox_file_out << vertices[i].x << " " << vertices[i].y << " " << vertices[i].z << " " << vertices[i].w << endl;
