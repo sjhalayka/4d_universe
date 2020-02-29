@@ -3,9 +3,11 @@
 
 int main(int argc, char **argv)
 {	
-	get_vertices_and_tetrahedra(1000);
+	get_vertices_and_tetrahedra(100000);
 
 	double K = 0;
+
+	vector<float> edge_lengths;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
@@ -14,6 +16,12 @@ int main(int argc, char **argv)
 			cout << "Error" << endl;
 			return 1;
 		}
+
+		vector<float> e = get_tet_edge_lengths(tetrahedra[i]);
+
+		for (size_t j = 0; j < e.size(); j++)
+			edge_lengths.push_back(e[j]);
+
 
 		vector_4 this_tet_centre = get_tet_centre(tetrahedra[i]);
 
@@ -79,6 +87,14 @@ int main(int argc, char **argv)
 	K /= static_cast<double>(tetrahedra.size());
 
 	cout << 3.0 + K << endl;
+
+
+
+	write_histogram(edge_lengths, "histogram.png");
+
+
+	return 0;
+
 
 	glutInit(&argc, argv);
 	init_opengl(win_x, win_y);
