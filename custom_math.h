@@ -31,9 +31,8 @@ namespace custom_math
 
 	class indexed_triangle;
 	class indexed_tetrahedron;
-	class indexed_tetrahedron;
 
-	const double pi = 3.14159265358979323846;
+	const double pi = 4.0*atan(1.0);
 	const double pi_half = pi/2;
 	const double pi_2 = 2*pi;
 	const double epsilon = 1e-6;
