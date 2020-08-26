@@ -1,7 +1,7 @@
 
 #include "main.h"
 
-int main(int argc, char **argv)
+int main(void)
 {	
 	get_vertices_and_tetrahedra(10000);
 

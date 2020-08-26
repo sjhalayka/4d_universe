@@ -38,9 +38,7 @@ namespace custom_math
 	const double pi_2 = 2*pi;
 	const double epsilon = 1e-6;
 
-	double d(const double &a, const double &b);
-	double d_3(const vector_3 &a, const vector_3 &b);
-	double d_4(const vector_4 &a, const vector_4 &b);
+	double d_4(const vector_4& a, const vector_4& b);
 };
 
 
@@ -499,6 +497,11 @@ public:
 		return false;
 	}
 };
+
+double custom_math::d_4(const vector_4& a, const vector_4& b)
+{
+	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w));
+}
 
 #endif
 
