@@ -3,11 +3,9 @@
 
 int main(int argc, char **argv)
 {	
-	get_vertices_and_tetrahedra(1000);
+	get_vertices_and_tetrahedra(10000);
 
-	double K = 0;
-
-	vector<float> edge_lengths;
+	vector<double> curvatures;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
@@ -16,12 +14,6 @@ int main(int argc, char **argv)
 			cout << "Error" << endl;
 			return 1;
 		}
-
-		vector<float> e = get_tet_edge_lengths(tetrahedra[i]);
-
-		for (size_t j = 0; j < e.size(); j++)
-			edge_lengths.push_back(e[j]);
-
 
 		vector_4 this_tet_centre = get_tet_centre(tetrahedra[i]);
 
@@ -81,35 +73,17 @@ int main(int argc, char **argv)
 		double d_i = (n_0.dot(o_0) + n_1.dot(o_1) + n_2.dot(o_2) + n_3.dot(o_3)) / 4.0;
 		double k_i = (1.0 - d_i) / 2.0;
 
-		K += k_i;
+		curvatures.push_back(k_i);
 	}
 
-	K /= static_cast<double>(tetrahedra.size());
+	double K = 0;
 
-	cout << 3.0 + K << endl;
+	for (size_t i = 0; i < curvatures.size(); i++)
+		K += curvatures[i];
 
+	K /= curvatures.size();
 
-
-	write_histogram(edge_lengths, "histogram.png");
-
-
-	return 0;
-
-
-	glutInit(&argc, argv);
-	init_opengl(win_x, win_y);
-	glutReshapeFunc(reshape_func);
-	glutIdleFunc(idle_func);
-	glutDisplayFunc(display_func);
-	glutKeyboardFunc(keyboard_func);
-	glutMouseFunc(mouse_func);
-	glutMotionFunc(motion_func);
-	glutPassiveMotionFunc(passive_motion_func);
-	//glutIgnoreKeyRepeat(1);
-
-	glutMainLoop();
-
-	glutDestroyWindow(win_id);
+	cout << K << " +/- " << standard_deviation(curvatures) << endl;
 
 	return 0;
 }
