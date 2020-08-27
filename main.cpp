@@ -1,3 +1,6 @@
+// This code and data are in the public domain.
+
+
 
 #include "main.h"
 
