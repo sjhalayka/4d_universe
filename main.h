@@ -1,4 +1,5 @@
 
+// This code and data are in the public domain.
 
 
 #ifndef main_H
