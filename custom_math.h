@@ -1,5 +1,5 @@
 
-// This code and data is in the public domain.
+// This code and data are in the public domain.
 
 
 #ifndef custom_math_h
