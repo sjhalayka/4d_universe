@@ -18,7 +18,6 @@ using std::endl;
 
 #include <cmath>
 #include <cstdlib>
-#include <GL/glut.h>
 
 
 namespace custom_math
