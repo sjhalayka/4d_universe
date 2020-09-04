@@ -10,6 +10,8 @@ int main(void)
 
 	vector<double> curvatures;
 
+	double tet_volume = 0;
+
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
 		if (tet_neighbours[i].size() != 4)
@@ -17,6 +19,20 @@ int main(void)
 			cout << "Error" << endl;
 			return 1;
 		}
+
+		vector_4 a = vertices[tetrahedra[i].vertex_indices[0]];
+		vector_4 b = vertices[tetrahedra[i].vertex_indices[1]];
+		vector_4 c = vertices[tetrahedra[i].vertex_indices[2]];
+		vector_4 d = vertices[tetrahedra[i].vertex_indices[3]];
+
+		double u = d_4(a, b);
+		double v = d_4(a, c);
+		double w = d_4(a, d);
+		double U = d_4(c, d);
+		double V = d_4(b, d);
+		double W = d_4(b, c);
+
+		tet_volume += tetrahedra[i].volume(u, v, w, U, V, W);
 
 		vector_4 this_tet_centre = get_tet_centre(tetrahedra[i]);
 
@@ -84,5 +100,11 @@ int main(void)
 
 	cout << K << " +/- " << standard_deviation(curvatures) << endl;
 
+	double r3 = 0.5*0.5*0.5;
+	double pi2 = pi * pi;
+
+	cout << tet_volume << " " << 2 * pi2 * r3 << endl;
+
 	return 0;
 }
+ 

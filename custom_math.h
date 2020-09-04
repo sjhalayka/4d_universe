@@ -482,6 +482,31 @@ class custom_math::indexed_tetrahedron
 public:
 	size_t vertex_indices[4];
 
+	double volume(double u, double v, double w, double U, double V, double W, double b = 12)
+	{
+		// Steps to calculate volume of a 
+		// Tetrahedron using formula 
+		double uPow = pow(u, 2);
+		double vPow = pow(v, 2);
+		double wPow = pow(w, 2);
+		double UPow = pow(U, 2);
+		double VPow = pow(V, 2);
+		double WPow = pow(W, 2);
+
+		double a = 4 * (uPow * vPow * wPow)
+			- uPow * pow((vPow + wPow - UPow), 2)
+			- vPow * pow((wPow + uPow - VPow), 2)
+			- wPow * pow((uPow + vPow - WPow), 2)
+			+ (vPow + wPow - UPow) * (wPow + uPow - VPow)
+			* (uPow + vPow - WPow);
+		
+		double vol = sqrt(a);
+		vol /= b;
+
+		return vol;
+	}
+
+
 	inline bool operator==(const indexed_tetrahedron &right) const
 	{
 		if (right.vertex_indices[0] == vertex_indices[0] &&
