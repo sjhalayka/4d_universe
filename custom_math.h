@@ -484,6 +484,8 @@ public:
 
 	double volume(double u, double v, double w, double U, double V, double W, double b = 12)
 	{
+		// https://www.geeksforgeeks.org/program-to-find-the-volume-of-an-irregular-tetrahedron/
+		//
 		// Steps to calculate volume of a 
 		// Tetrahedron using formula 
 		double uPow = pow(u, 2);
