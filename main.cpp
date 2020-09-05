@@ -20,6 +20,7 @@ int main(void)
 			return 1;
 		}
 
+		// Get tetrahedron volume
 		vector_4 a = vertices[tetrahedra[i].vertex_indices[0]];
 		vector_4 b = vertices[tetrahedra[i].vertex_indices[1]];
 		vector_4 c = vertices[tetrahedra[i].vertex_indices[2]];
@@ -34,6 +35,7 @@ int main(void)
 
 		tet_volume += tetrahedra[i].volume(u, v, w, U, V, W);
 
+		// Get curvature
 		vector_4 this_tet_centre = get_tet_centre(tetrahedra[i]);
 
 		vector_4 tet_0_centre = get_tet_centre(tetrahedra[tet_neighbours[i][0]]);
@@ -91,6 +93,7 @@ int main(void)
 		curvatures.push_back(k_i);
 	}
 
+	// Print average curvature
 	double K = 0;
 
 	for (size_t i = 0; i < curvatures.size(); i++)
@@ -100,6 +103,7 @@ int main(void)
 
 	cout << K << " +/- " << standard_deviation(curvatures) << endl;
 
+	// Print total volume
 	double r3 = 0.5*0.5*0.5;
 	double pi2 = pi * pi;
 
