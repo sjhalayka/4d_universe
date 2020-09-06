@@ -1,7 +1,5 @@
 // This code and data are in the public domain.
 
-
-
 #include "main.h"
 
 int main(void)
@@ -10,7 +8,7 @@ int main(void)
 
 	vector<double> curvatures;
 
-	double tet_volume = 0;
+	double total_volume = 0;
 
 	for (size_t i = 0; i < tetrahedra.size(); i++)
 	{
@@ -20,20 +18,20 @@ int main(void)
 			return 1;
 		}
 
-		// Get tetrahedron volume
+		// Get volume
 		vector_4 a = vertices[tetrahedra[i].vertex_indices[0]];
 		vector_4 b = vertices[tetrahedra[i].vertex_indices[1]];
 		vector_4 c = vertices[tetrahedra[i].vertex_indices[2]];
 		vector_4 d = vertices[tetrahedra[i].vertex_indices[3]];
 
-		double u = d_4(a, b);
-		double v = d_4(a, c);
-		double w = d_4(a, d);
-		double U = d_4(c, d);
-		double V = d_4(b, d);
-		double W = d_4(b, c);
+		total_volume += tetrahedra[i].volume(
+			d_4(a, b),
+			d_4(a, c), 
+			d_4(a, d), 
+			d_4(c, d),
+			d_4(b, d),
+			d_4(b, c));
 
-		tet_volume += tetrahedra[i].volume(u, v, w, U, V, W);
 
 		// Get curvature
 		vector_4 this_tet_centre = get_tet_centre(tetrahedra[i]);
@@ -61,7 +59,6 @@ int main(void)
 
 		get_shared_triangle(i, tet_neighbours[i][3], it);
 		tri_3_centre = get_tri_centre(it);
-
 
 		vector_4 n_0 = this_tet_centre - tri_0_centre;
 		n_0.normalize();
@@ -93,6 +90,12 @@ int main(void)
 		curvatures.push_back(k_i);
 	}
 
+	// Print total volume
+	double r3 = 0.5 * 0.5 * 0.5;
+	double pi2 = pi * pi;
+
+	cout << total_volume << " " << 2 * pi2 * r3 << endl;
+
 	// Print average curvature
 	double K = 0;
 
@@ -102,12 +105,6 @@ int main(void)
 	K /= curvatures.size();
 
 	cout << K << " +/- " << standard_deviation(curvatures) << endl;
-
-	// Print total volume
-	double r3 = 0.5*0.5*0.5;
-	double pi2 = pi * pi;
-
-	cout << tet_volume << " " << 2 * pi2 * r3 << endl;
 
 	return 0;
 }
