@@ -94,7 +94,8 @@ int main(void)
 	double r3 = 0.5 * 0.5 * 0.5;
 	double pi2 = pi * pi;
 
-	cout << total_volume << " " << 2 * pi2 * r3 << endl;
+	cout << "Total volume: " << total_volume << " of maximum " << 2 * pi2 * r3 << endl;
+
 
 	// Print average curvature
 	double K = 0;
@@ -104,7 +105,7 @@ int main(void)
 
 	K /= curvatures.size();
 
-	cout << K << " +/- " << standard_deviation(curvatures) << endl;
+	cout << "Curvature: " << K << " +/- " << standard_deviation(curvatures) << endl;
 
 	return 0;
 }
